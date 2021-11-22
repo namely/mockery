@@ -1,14 +1,17 @@
 module github.com/namely/mockery
 
-go 1.12
+go 1.14
 
 require (
-	github.com/kr/pretty v0.2.0 // indirect
-	github.com/stretchr/objx v0.2.0 // indirect
-	github.com/stretchr/testify v1.4.0
-	golang.org/x/mod v0.2.0 // indirect
-	golang.org/x/tools v0.0.0-20200131211209-ecb101ed6550
-	golang.org/x/xerrors v0.0.0-20191204190536-9bdfabe68543 // indirect
-	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
-	gopkg.in/yaml.v2 v2.2.8 // indirect
+	github.com/mitchellh/go-homedir v1.1.0
+	github.com/pkg/errors v0.9.1
+	github.com/rs/zerolog v1.26.0
+	github.com/spf13/cobra v1.2.1
+	github.com/spf13/viper v1.9.0
+	github.com/stretchr/testify v1.7.0
+	github.com/vektra/mockery v1.1.2 // indirect
+	github.com/vektra/mockery/v2 v2.9.4
+	golang.org/x/crypto v0.0.0-20211117183948-ae814b36b871
+	golang.org/x/tools v0.1.7
+	gopkg.in/yaml.v2 v2.4.0
 )

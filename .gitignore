@@ -1,3 +1,5 @@
 mocks
 mockery.prof
 vendor
+dist
+.idea
