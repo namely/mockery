@@ -1,30 +1,33 @@
 SHELL=bash
 
-all: clean fmt test fixture install integration
+.PHONY: all
+all: clean fmt mocks test install docker integration
 
+.PHONY: clean
 clean:
 	rm -rf mocks
 
+.PHONY: fmt
 fmt:
 	go fmt ./...
 
-test:
+.PHONY: test
+test: mocks
 	go test ./...
 
-fixture:
-	mockery -print -dir mockery/fixtures -name RequesterVariadic > mockery/fixtures/mocks/requester_variadic.go
+mocks: $(shell find . -type f -name '*.go' -not -name '*_test.go')
+	go run . --dir pkg/fixtures --output mocks/pkg/fixtures
+	go run . --all=false --print --dir pkg/fixtures --name RequesterVariadic --structname RequesterVariadicOneArgument --unroll-variadic=False > mocks/pkg/fixtures/RequesterVariadicOneArgument.go
+	@touch mocks
 
+.PHONY: install
 install:
-	go install ./...
+	go install .
 
-integration:
-	rm -rf mocks
-	${GOPATH}/bin/mockery -all -recursive -cpuprofile="mockery.prof" -dir="mockery/fixtures"
-	if [ ! -d "mocks" ]; then \
-		echo "No Mock Dir Created"; \
-		exit 1; \
-	fi
-	if [ ! -f "mocks/AsyncProducer.go" ]; then \
-		echo "AsyncProducer.go not created"; \
-		echo 1; \
-	fi
+.PHONY: docker
+docker:
+	docker build -t vektra/mockery .
+
+.PHONY: integration
+integration: docker install
+	./hack/run-e2e.sh
