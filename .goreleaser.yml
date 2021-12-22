@@ -7,7 +7,7 @@ builds:
   - main: ./main.go
     binary: mockery
     ldflags:
-      - -s -w -X github.com/vektra/mockery/v2/pkg/config.SemVer=v{{.Version}}
+      - -s -w -X github.com/namely/mockery/v2/pkg/config.SemVer=v{{.Version}}
     env:
       - CGO_ENABLED=0
     goos:
@@ -37,10 +37,10 @@ dockers:
   - goos: linux
     goarch: amd64
     image_templates:
-      - 'vektra/mockery:{{ .Tag }}'
-      - 'vektra/mockery:v{{ .Major }}'
-      - 'vektra/mockery:v{{ .Major }}.{{ .Minor }}'
-      - 'vektra/mockery:latest'
+      - 'namely/mockery:{{ .Tag }}'
+      - 'namely/mockery:v{{ .Major }}'
+      - 'namely/mockery:v{{ .Major }}.{{ .Minor }}'
+      - 'namely/mockery:latest'
     build_flag_templates:
       - "--pull"
       - "--label=org.opencontainers.image.created={{.Date}}"
@@ -49,10 +49,10 @@ dockers:
       - "--label=org.opencontainers.image.version={{.Version}}"
       - "--label=org.opencontainers.image.source={{.GitURL}}"
 brews:
-  - homepage: https://github.com/vektra/mockery
+  - homepage: https://github.com/namely/mockery
     description: "A mock code autogenerator for Go"
     tap:
-        owner: vektra
+        owner: namely
         name: homebrew-tap
         token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
     folder: Formula

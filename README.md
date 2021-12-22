@@ -1,7 +1,7 @@
 
 mockery
 =======
-[![Release](https://github.com/vektra/mockery/actions/workflows/release.yml/badge.svg)](https://github.com/vektra/mockery/actions/workflows/release.yml) [![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/vektra/mockery/v2?tab=overview) ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/vektra/mockery) ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/vektra/mockery) [![Go Report Card](https://goreportcard.com/badge/github.com/vektra/mockery)](https://goreportcard.com/report/github.com/vektra/mockery) [![codecov](https://codecov.io/gh/vektra/mockery/branch/master/graph/badge.svg)](https://codecov.io/gh/vektra/mockery)
+[![Release](https://github.com/namely/mockery/actions/workflows/release.yml/badge.svg)](https://github.com/namely/mockery/actions/workflows/release.yml) [![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/namely/mockery/v2?tab=overview) ![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/namely/mockery) ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/namely/mockery) [![Go Report Card](https://goreportcard.com/badge/github.com/namely/mockery)](https://goreportcard.com/report/github.com/namely/mockery) [![codecov](https://codecov.io/gh/namely/mockery/branch/master/graph/badge.svg)](https://codecov.io/gh/namely/mockery)
 
 
 
@@ -36,13 +36,13 @@ Installation
 
 ### Github Release
 
-Visit the [releases page](https://github.com/vektra/mockery/releases) to download one of the pre-built binaries for your platform. 
+Visit the [releases page](https://github.com/namely/mockery/releases) to download one of the pre-built binaries for your platform. 
 
 ### Docker
 
-Use the [Docker image](https://hub.docker.com/r/vektra/mockery)
+Use the [Docker image](https://hub.docker.com/r/namely/mockery)
 
-    docker pull vektra/mockery
+    docker pull namely/mockery
 
 ### Homebrew
 
@@ -55,12 +55,12 @@ Install through [brew](https://brew.sh/)
 
 Alternatively, you can use the go get method:
 
-    go get github.com/vektra/mockery/v2/.../
+    go get github.com/namely/mockery/v2/.../
 
 Examples
 --------
 
-![](https://raw.githubusercontent.com/vektra/mockery/master/docs/Peek%202020-06-28%2000-08.gif)
+![](https://raw.githubusercontent.com/namely/mockery/master/docs/Peek%202020-06-28%2000-08.gif)
 
 #### Simplest case
 
@@ -297,14 +297,14 @@ mockery uses [spf13/viper](https://github.com/spf13/viper) under the hood for it
 	$ grep structname .mockery.yaml
 	structname: config_from_file
 	$ ./mockery showconfig --structname config_from_cli | grep structname
-	Using config file: /home/ltclipp/git/vektra/mockery/.mockery.yaml
+	Using config file: /home/ltclipp/git/namely/mockery/.mockery.yaml
 	structname: config_from_cli
 	$ ./mockery showconfig  | grep structname
-	Using config file: /home/ltclipp/git/vektra/mockery/.mockery.yaml
+	Using config file: /home/ltclipp/git/namely/mockery/.mockery.yaml
 	structname: config_from_env
 	$ unset MOCKERY_STRUCTNAME
 	$ ./mockery showconfig  | grep structname
-	Using config file: /home/ltclipp/git/vektra/mockery/.mockery.yaml
+	Using config file: /home/ltclipp/git/namely/mockery/.mockery.yaml
 	structname: config_from_file
 
 By default it searches the current working directory for a file named `.mockery.[extension]` where [extension] is any of the [recognized extensions](https://pkg.go.dev/github.com/spf13/viper@v1.7.0?tab=doc#pkg-variables).
@@ -320,7 +320,7 @@ The versioning in this project applies only to the behavior of the mockery binar
 4. Behavior of mockery given a set of arguments.
 
 What the version does _not_ track:
-1. The interfaces, objects, methods etc. in the vektra/mockery package.
+1. The interfaces, objects, methods etc. in the namely/mockery package.
 2. Compatibility of `go get`-ing mockery with new or old versions of Golang.
 
 Development Efforts
@@ -338,7 +338,7 @@ v1 is the original version of the software, and is no longer supported.
 
 ### v3
 
-[v3](https://github.com/vektra/mockery/projects/3) will include a ground-up overhaul of the entire codebase and will completely change how mockery works internally and externally. The highlights of the project are:
+[v3](https://github.com/namely/mockery/projects/3) will include a ground-up overhaul of the entire codebase and will completely change how mockery works internally and externally. The highlights of the project are:
 - Moving towards a package-based model instead of a file-based model. `mockery` currently iterates over every file in a project and calls `package.Load` on each one, which is time consuming. Moving towards a model where the entire package is loaded at once will dramtically reduce runtime, and will simplify logic. Additionally, supporting only a single mode of operation (package mode) will greatly increase the intuitiveness of the software.
 - Configuration-driven generation. `v3` will be entirely driven by configuration, meaning:
   * You specify the packages you want mocked, instead of relying on it auto-discovering your package. Auto-discovery in theory sounds great, but in practice it leads to a great amount of complexity for very little benefit.
@@ -351,4 +351,4 @@ v1 is the original version of the software, and is no longer supported.
 Stargazers
 ----------
 
-[![Stargazers over time](https://starchart.cc/vektra/mockery.svg)](https://starchart.cc/vektra/mockery)
+[![Stargazers over time](https://starchart.cc/namely/mockery.svg)](https://starchart.cc/namely/mockery)

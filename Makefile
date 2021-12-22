@@ -26,7 +26,7 @@ install:
 
 .PHONY: docker
 docker:
-	docker build -t vektra/mockery .
+	docker build -t namely/mockery .
 
 .PHONY: integration
 integration: docker install

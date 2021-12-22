@@ -10,8 +10,8 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/namely/mockery/v2/pkg/logging"
 	"github.com/rs/zerolog"
-	"github.com/vektra/mockery/v2/pkg/logging"
 	"golang.org/x/tools/go/packages"
 )
 

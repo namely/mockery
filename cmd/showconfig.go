@@ -3,10 +3,10 @@ package cmd
 import (
 	"fmt"
 
+	"github.com/namely/mockery/v2/pkg/config"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/vektra/mockery/v2/pkg/config"
 	"gopkg.in/yaml.v2"
 )
 
