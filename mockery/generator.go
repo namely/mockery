@@ -21,28 +21,14 @@ import (
 
 var invalidIdentifierChar = regexp.MustCompile("[^[:digit:][:alpha:]_]")
 
-func getGoPathSrc() string {
-	return filepath.Join(filepath.SplitList(build.Default.GOPATH)[0], "src")
-}
-
-func stripChars(str, chr string) string {
-	return strings.Map(func(r rune) rune {
-		if strings.IndexRune(chr, r) < 0 {
-			return r
-		}
-		return -1
-	}, str)
-}
-
 // Generator is responsible for generating the string containing
 // imports and the mock struct that will later be written out as file.
 type Generator struct {
 	buf bytes.Buffer
 
-	ip               bool
-	iface            *Interface
-	pkg              string
-	localPackageName *string
+	ip    bool
+	iface *Interface
+	pkg   string
 
 	importsWerePopulated bool
 	localizationCache    map[string]string
@@ -54,7 +40,6 @@ type Generator struct {
 
 // NewGenerator builds a Generator.
 func NewGenerator(iface *Interface, pkg string, inPackage bool) *Generator {
-
 	var roots []string
 
 	for _, root := range filepath.SplitList(build.Default.GOPATH) {
@@ -151,10 +136,6 @@ func (g *Generator) importNameExists(name string) bool {
 	return nameExists
 }
 
-func (g *Generator) getLocalizedPathFromPackage(pkg *types.Package) string {
-	return g.getLocalizedPath(pkg.Path())
-}
-
 func calculateImport(set []string, path string) string {
 	for _, root := range set {
 		if strings.HasPrefix(path, root) {
@@ -221,17 +202,6 @@ func (g *Generator) mockName() string {
 	return g.iface.Name
 }
 
-func (g *Generator) unescapedImportPath(imp *ast.ImportSpec) string {
-	return strings.Replace(imp.Path.Value, "\"", "", -1)
-}
-
-func (g *Generator) getImportStringFromSpec(imp *ast.ImportSpec) string {
-	if name, ok := g.packagePathToName[g.unescapedImportPath(imp)]; ok {
-		return fmt.Sprintf("import %s %s\n", name, imp.Path.Value)
-	}
-	return fmt.Sprintf("import %s\n", imp.Path.Value)
-}
-
 func (g *Generator) sortedImportNames() (importNames []string) {
 	for name := range g.nameToPackagePath {
 		importNames = append(importNames, name)
@@ -284,34 +254,6 @@ var ErrNotInterface = errors.New("expression not an interface")
 
 func (g *Generator) printf(s string, vals ...interface{}) {
 	fmt.Fprintf(&g.buf, s, vals...)
-}
-
-var builtinTypes = map[string]bool{
-	"ComplexType": true,
-	"FloatType":   true,
-	"IntegerType": true,
-	"Type":        true,
-	"Type1":       true,
-	"bool":        true,
-	"byte":        true,
-	"complex128":  true,
-	"complex64":   true,
-	"error":       true,
-	"float32":     true,
-	"float64":     true,
-	"int":         true,
-	"int16":       true,
-	"int32":       true,
-	"int64":       true,
-	"int8":        true,
-	"rune":        true,
-	"string":      true,
-	"uint":        true,
-	"uint16":      true,
-	"uint32":      true,
-	"uint64":      true,
-	"uint8":       true,
-	"uintptr":     true,
 }
 
 type namer interface {
@@ -518,7 +460,6 @@ func (g *Generator) Generate() error {
 }
 
 func (g *Generator) mockMethod(fname string, params, returns *paramList) {
-
 	if len(params.Names) == 0 {
 		g.printf("// %s provides a mock function with given fields:\n", fname)
 	} else {
@@ -549,9 +490,7 @@ func (g *Generator) mockMethod(fname string, params, returns *paramList) {
 	if len(returns.Types) > 0 {
 		g.printf("\tret := %s\n\n", called)
 
-		var (
-			ret []string
-		)
+		var ret []string
 
 		for idx, typ := range returns.Types {
 			g.printf("\tvar r%d %s\n", idx, typ)
@@ -582,7 +521,6 @@ func (g *Generator) mockMethod(fname string, params, returns *paramList) {
 }
 
 func (g *Generator) mockMethodExpectation(expectationName, fname string, params, returns *paramList) {
-
 	methodExpectationName := g.mockName() + fname + "Expectation"
 	g.printf("type %s struct {\n\tcall *mock.Call\n}\n\n", methodExpectationName)
 
@@ -751,6 +689,6 @@ func (g *Generator) Write(w io.Writer) error {
 		return err
 	}
 
-	w.Write(res)
-	return nil
+	_, err = w.Write(res)
+	return err
 }

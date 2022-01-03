@@ -34,11 +34,14 @@ type Config struct {
 }
 
 func main() {
-	config := parseConfigFromArgs(os.Args)
+	config, err := parseConfigFromArgs(os.Args)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "failed to parse command-line: %s\n", err.Error())
+		os.Exit(1)
+	}
 
 	var recursive bool
 	var filter *regexp.Regexp
-	var err error
 	var limitOne bool
 
 	if config.quiet {
@@ -82,7 +85,10 @@ func main() {
 			return
 		}
 
-		pprof.StartCPUProfile(f)
+		if err := pprof.StartCPUProfile(f); err != nil {
+			fmt.Fprintf(os.Stderr, "failed in pprof.StartCPUProfile: %s\n", err.Error())
+			os.Exit(1)
+		}
 		defer pprof.StopCPUProfile()
 	}
 
@@ -123,7 +129,7 @@ func main() {
 	}
 }
 
-func parseConfigFromArgs(args []string) Config {
+func parseConfigFromArgs(args []string) (Config, error) {
 	config := Config{}
 
 	flagSet := flag.NewFlagSet(args[0], flag.ExitOnError)
@@ -145,7 +151,5 @@ func parseConfigFromArgs(args []string) Config {
 	flagSet.BoolVar(&config.fkeepTree, "keeptree", false, "keep the tree structure of the original interface files into a different repository. Must be used with XX")
 	flagSet.StringVar(&config.buildTags, "tags", "", "space-separated list of additional build tags to use")
 
-	flagSet.Parse(args[1:])
-
-	return config
+	return config, flagSet.Parse(args[1:])
 }

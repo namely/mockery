@@ -3,9 +3,9 @@ package mockery
 import (
 	"testing"
 
+	"github.com/namely/mockery/mockery/fixtures/mocks"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/suite"
-	"github.com/namely/mockery/mockery/fixtures/mocks"
 )
 
 // CompatSuite covers compatbility with github.com/stretchr/testify/mock.

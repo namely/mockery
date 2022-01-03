@@ -4,18 +4,23 @@ all: clean fmt test fixture install integration
 
 clean:
 	rm -rf mocks
+	rm -rf mockery/fixtures/mocks
 
 fmt:
 	go fmt ./...
 
-test:
+lint:
+	golangci-lint run
+
+test: fixture
 	go test ./...
 
 fixture:
+	mkdir -p mockery/fixtures/mocks
 	mockery -print -dir mockery/fixtures -name RequesterVariadic > mockery/fixtures/mocks/requester_variadic.go
 
 install:
-	go install ./...
+	go install ./cmd/mockery
 
 integration:
 	rm -rf mocks

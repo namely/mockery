@@ -6,8 +6,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var testFile string
-var testFile2 string
+var (
+	testFile  string
+	testFile2 string
+)
 
 func init() {
 	testFile = getFixturePath("requester.go")
@@ -28,7 +30,7 @@ func TestFileParse(t *testing.T) {
 	assert.NotNil(t, node)
 }
 
-func noTestFileInterfaces(t *testing.T) {
+func noTestFileInterfaces(t *testing.T) { //nolint:unused,deadcode
 	parser := NewParser(nil)
 
 	err := parser.Parse(testFile)
