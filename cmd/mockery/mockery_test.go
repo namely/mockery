@@ -7,12 +7,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func configFromCommandLine(str string) Config {
+func configFromCommandLine(str string) (Config, error) {
 	return parseConfigFromArgs(strings.Split(str, " "))
 }
 
 func TestParseConfigDefaults(t *testing.T) {
-	config := configFromCommandLine("mockery")
+	config, err := configFromCommandLine("mockery")
+	assert.NoError(t, err)
 	assert.Equal(t, "", config.fName)
 	assert.Equal(t, false, config.fPrint)
 	assert.Equal(t, "./mocks", config.fOutput)
@@ -26,7 +27,8 @@ func TestParseConfigDefaults(t *testing.T) {
 }
 
 func TestParseConfigFlippingValues(t *testing.T) {
-	config := configFromCommandLine("mockery -name hi -print -output output -dir dir -recursive -all -inpkg -testonly -case case -note note")
+	config, err := configFromCommandLine("mockery -name hi -print -output output -dir dir -recursive -all -inpkg -testonly -case case -note note")
+	assert.NoError(t, err)
 	assert.Equal(t, "hi", config.fName)
 	assert.Equal(t, true, config.fPrint)
 	assert.Equal(t, "output", config.fOutput)

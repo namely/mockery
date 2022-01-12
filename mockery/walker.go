@@ -117,7 +117,7 @@ func (this *GeneratorVisitor) VisitWalk(iface *Interface) error {
 		fmt.Printf("Unable to get writer for %s: %s", iface.Name, err)
 		os.Exit(1)
 	}
-	defer closer()
+	defer closer() //nolint:errcheck
 
 	gen := NewGenerator(iface, pkg, this.InPackage)
 	gen.GeneratePrologueNote(this.Note)
