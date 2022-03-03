@@ -1,5 +1,7 @@
-mockery
-=======
+# mockery
+ 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/9faef47671234913b5b2a9ef817f7e97)](https://app.codacy.com/gh/namely/mockery/dashboard)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/9faef47671234913b5b2a9ef817f7e97)](https://app.codacy.com/gh/namely/mockery/dashboard)
 
 This repo is a fork of https://github.com/vektra/mockery fixing compatibility
 with go 1.13 in addition to adding strongly typed expectations.
